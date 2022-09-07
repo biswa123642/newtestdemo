@@ -15,7 +15,7 @@ spec:
     spec:
       containers: # List
         - name: myapp1-container
-          image: biswajit.azurecr.io/biswa123642/newtestdemo
+          image: biswajit.azurecr.io/biswa123642/newtestdemo:476
           ports:
             - containerPort: 5005
 ---
