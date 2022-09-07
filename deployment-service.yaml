@@ -1,33 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp1-deployment
+  name: acrdemo-localdocker-deployment
+  labels:
+    app: acrdemo-localdocker
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: myapp1
-  template: 
-    metadata: # Dictionary
-      name: myapp1-pod
-      labels: # Dictionary 
-        app: myapp1       
+      app: acrdemo-localdocker
+  template:
+    metadata:
+      labels:
+        app: acrdemo-localdocker
     spec:
-      containers: # List
-        - name: myapp1-container
-          image: biswajit.azurecr.io/biswa123642/newtestdemo:476
+      containers:
+        - name: acrdemo-localdocker
+          image: acrforaksdemo2.azurecr.io/app1/kube-nginx-acr:v1
+          imagePullPolicy: Always
           ports:
-            - containerPort: 5005
+            - containerPort: 80
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: myapp-loadbalancer
-  labels: 
-    app: myapp1
+  name: acrdemo-localdocker-service
+  labels:
+    app: acrdemo-localdocker
 spec:
-  type: LoadBalancer 
+  type: LoadBalancer
   selector:
-    app: myapp1
-  ports: 
+    app: acrdemo-localdocker
+  ports:
     - port: 80
+      targetPort: 80
