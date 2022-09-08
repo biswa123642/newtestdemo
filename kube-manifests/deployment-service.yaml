@@ -56,7 +56,7 @@ kind: Service
 metadata:
   name: blue-green-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: blue
   ports:
