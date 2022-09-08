@@ -1,37 +1,64 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: acrdemo-localdocker-deployment
-  labels:
-    app: acrdemo-localdocker
+  name: blue-deployment
 spec:
-  replicas: 1
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
-      app: acrdemo-localdocker
+      app: blue
   template:
     metadata:
       labels:
-        app: acrdemo-localdocker
+        app: blue
     spec:
       containers:
-        - name: acrdemo-localdocker
-          image: biswajitacr.azurecr.io/biswa123642/newtestdemo:#{Build.BuildId}#
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
----
+      - name: lgwm-image
+        image: biswajitacr.azurecr.io/biswa123642/newtestdemo:#{Build.BuildId}#
+        ports:
+        - containerPort: 80
 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-deployment
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: green
+  template:
+    metadata:
+      labels:
+        app: green
+    spec:
+      containers:
+      - name: lgwm-image
+        image: biswajitacr.azurecr.io/biswa123642/newtestdemo:#{Build.BuildId}#
+        ports:
+        - containerPort: 80
+
+
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: acrdemo-localdocker-service
-  labels:
-    app: acrdemo-localdocker
+  name: blue-green-service
 spec:
   type: LoadBalancer
   selector:
-    app: acrdemo-localdocker
+    app: blue
   ports:
-    - port: 80
-      targetPort: 80
+  - port: 80
+    targetPort: 80
