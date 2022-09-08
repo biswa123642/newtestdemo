@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: lgwm-image
-        image: biswajitacr.azurecr.io/biswa123642/newtestdemo:#{Build.BuildId}#
+        image: nginx
         ports:
         - containerPort: 80
 
