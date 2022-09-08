@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: acrdemo-localdocker
-          image: biswajit.azurecr.io/biswa123642/newtestdemo:#{Build.BuildId}#
+          image: biswajitacr.azurecr.io/biswa123642/newtestdemo:#{Build.BuildId}#
           imagePullPolicy: Always
           ports:
             - containerPort: 80
