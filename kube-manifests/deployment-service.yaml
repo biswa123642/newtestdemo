@@ -25,9 +25,11 @@ spec:
 
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment 
 metadata:
   name: green-deployment
+  labels:
+    app: green
 spec:
   replicas: 4
   strategy:
@@ -43,11 +45,27 @@ spec:
       labels:
         app: green
     spec:
+      initContainers:
+        - name: init-db
+          image: busybox:1.31
+          command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']      
       containers:
-      - name: lgwm-image
-        image: nginx
-        ports:
-        - containerPort: 80
+        - name: usermgmt-webapp
+          image: stacksimplify/kube-usermgmt-webapp:1.0.0-MySQLDB
+          imagePullPolicy: Always
+          ports: 
+            - containerPort: 8080           
+          env:
+            - name: DB_HOSTNAME
+              value: "mysql"            
+            - name: DB_PORT
+              value: "3306"            
+            - name: DB_NAME
+              value: "webappdb"            
+            - name: DB_USERNAME
+              value: "dbadmin@akswebappdb"            
+            - name: DB_PASSWORD
+              value: "Redhat1449"
 
 
 ---
