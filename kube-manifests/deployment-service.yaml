@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: lgwm-image
-        image: demoacrtestgroup.azurecr.io/biswa123642/newtestdemo:#{Build.BuildId}#
+        image: testacrdemos.azurecr.io/biswa123642/newtestdemo:#{Build.BuildId}#
         ports:
         - containerPort: 80
 
