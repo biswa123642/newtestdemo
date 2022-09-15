@@ -55,17 +55,17 @@ spec:
           imagePullPolicy: Always
           ports: 
             - containerPort: 8080           
-          env:
-            - name: DB_HOSTNAME
-              value: "mysql"            
-            - name: DB_PORT
-              value: "3306"            
-            - name: DB_NAME
-              value: "webappdb"            
-            - name: DB_USERNAME
-              value: "dbadmin@akswebappdbs"            
-            - name: DB_PASSWORD
-              value: "Redhat1449"
+          volumeMounts:
+          - name: secrets-store01-inline
+            mountPath: "/mnt/secrets-store"
+            readOnly: true
+      volumes:
+      - name: secrets-store01-inline
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "azure-kvname-system-msi"
 
 
 ---
