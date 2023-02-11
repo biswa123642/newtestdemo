@@ -4,7 +4,7 @@ kind: Kustomization
 images:
 - name: lgwm-image
   newName: sahu123/nginx-app
-  newTag: #{Build.BuildId}#
+  newTag: "#{Build.BuildId}#"
 
 resources:
 - deployment-service.yaml
