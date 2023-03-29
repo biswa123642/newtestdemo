@@ -5,7 +5,7 @@
 replicaCount: 4
 
 image:
-  repository: sahu123/nginx-app
+  repository: sahu123/nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
