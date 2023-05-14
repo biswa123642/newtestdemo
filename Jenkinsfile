@@ -1,5 +1,6 @@
 pipeline {
   agent any
+  
   environment {
     DOCKER_ID = credentials('DOCKER_ID')
     registryCredential = 'dockerhub'
@@ -10,7 +11,7 @@ pipeline {
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build $DOCKER_ID/sitecore
+          dockerImage = docker.build("${$DOCKER_ID}/sitecore")
         }
       }
     }
