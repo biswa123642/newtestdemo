@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "biswa143/docker-test"
+    DOCKER_ID = credentials('DOCKER_ID')
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
@@ -9,7 +9,7 @@ pipeline {
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build registry
+          dockerImage = docker.build $DOCKER_ID/sitecore
         }
       }
     }
