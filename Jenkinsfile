@@ -11,7 +11,7 @@ pipeline {
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build("${env.DOCKER_ID}/sitecore")
+          dockerImage = docker.build("${DOCKER_ID}/sitecore")
         }
       }
     }
