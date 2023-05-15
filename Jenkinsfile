@@ -27,8 +27,8 @@ pipeline {
     }
     stage('Cleanup') {
       steps {
-        sh "docker rmi ${DOCKER_ID}/cd:$BUILD_NUMBER"
-        sh "docker rmi ${DOCKER_ID}/cd:latest"
+        bat 'docker rmi ${DOCKER_ID}/cd:$BUILD_NUMBER'
+        bat 'docker rmi ${DOCKER_ID}/cd:latest'
       }
     }
   }
