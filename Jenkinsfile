@@ -2,7 +2,7 @@ pipeline {
   agent any
   
   environment {
-    DOCKER_ID = credentials('DOCKER_ID')
+    registry = credentials('DOCKER_ID')
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
@@ -11,7 +11,7 @@ pipeline {
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build("${DOCKER_ID}/cd", "./docker")
+          dockerImage = docker.build("${registry}/cd", "./docker")
         }
       }
     }
@@ -27,8 +27,8 @@ pipeline {
     }
     stage('Cleanup') {
       steps {
-        bat 'docker rmi ${DOCKER_ID}/cd:$BUILD_NUMBER'
-        bat 'docker rmi ${DOCKER_ID}/cd:latest'
+        bat 'docker rmi ${registry}/cd:$BUILD_NUMBER'
+        bat 'docker rmi ${registry}/cd:latest'
       }
     }
   }
