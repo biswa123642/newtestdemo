@@ -30,7 +30,7 @@ pipeline {
         bat "docker rmi $registry/id:latest"
       }
     }
-    stage('Deploy App') {
+    stage('Deploy Image') {
       steps {
         script {
           kubeconfig(credentialsId: 'dockerhub') {
