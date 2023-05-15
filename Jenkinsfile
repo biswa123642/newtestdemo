@@ -33,7 +33,7 @@ pipeline {
     stage('Deploy Image') {
       steps {
         script {
-          kubeconfig(credentialsId: 'dockerhub') {
+          kubeconfig(credentialsId: 'kubeid') {
             bat "kubectl apply -f"
           }
         }
