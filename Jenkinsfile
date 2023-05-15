@@ -11,7 +11,7 @@ pipeline {
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build("${DOCKER_ID}/cm", "./docker")
+          dockerImage = docker.build("${DOCKER_ID}/cd", "./docker")
         }
       }
     }
@@ -27,10 +27,8 @@ pipeline {
     }
     stage('Cleanup') {
       steps {
-        script {
-          dockerImage.delete("$BUILD_NUMBER")
-            dockerImage.delete('latest')          
-        }
+        sh "docker rmi ${DOCKER_ID}/cd:$BUILD_NUMBER"
+        sh "docker rmi ${DOCKER_ID}/cd:latest"
       }
     }
   }
