@@ -11,7 +11,7 @@ pipeline {
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build("${registry}/id", "./docker") + ":$BUILD_NUMBER"
+          dockerImage = docker.build("${registry}/id", "./docker")
         }
       }
     }
@@ -19,14 +19,15 @@ pipeline {
       steps{
         script {
           docker.withRegistry( '', registryCredential ) {
-          dockerImage.push()
+          dockerImage.push("$BUILD_NUMBER")
           }
         }
       }
     }
-    stage('Cleanup') {
+    stage('Clean Image') {
       steps {
         bat "docker rmi $registry/id:$BUILD_NUMBER"
+        bat "docker rmi $registry/id:latest"
       }
     }
   }
