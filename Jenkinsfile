@@ -30,5 +30,14 @@ pipeline {
         bat "docker rmi $registry/id:latest"
       }
     }
+    stage('Deploy App') {
+      steps {
+        script {
+          kubeconfig(credentialsId: 'dockerhub') {
+            bat "kubectl apply -f"
+          }
+        }
+      }
+    }
   }
 }
