@@ -33,8 +33,7 @@ pipeline {
     stage('Deploy Image') {
       steps {
         script {
-          kubeconfig(credentialsId: 'kubeid') {
-            enableConfigSubstitution: true
+          kubeconfig(credentialsId: 'kubeid', enableConfigSubstitution: true) {
             bat "kubectl apply -k ./sitecore"
           }
         }
