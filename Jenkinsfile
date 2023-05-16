@@ -34,6 +34,7 @@ pipeline {
       steps {
         script {
           kubeconfig(credentialsId: 'kubeid') {
+            enableConfigSubstitution: true
             bat "kubectl apply -k ./sitecore"
           }
         }
