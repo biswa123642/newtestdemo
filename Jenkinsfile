@@ -4,30 +4,20 @@ pipeline {
   environment {
     registry = credentials('DOCKER_ID')
     registryCredential = 'dockerhub'
-    dockerImage = ''
   }
   
   stages {
-    stage('Build image') {
+    stage('Build And Push image') {
       steps{
         script {
-          dockerImage = docker.build("${registry}/id:$BUILD_NUMBER", "./docker")
-        }
-      }
-    }
-    stage('Push Image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-          dockerImage.push("$BUILD_NUMBER")
-          }
+          def dockerImage = docker.build("${registry}/id:$BUILD_NUMBER", "./docker")
+          dockerImage.push()
         }
       }
     }
     stage('Clean Image') {
       steps {
         bat "docker rmi $registry/id:$BUILD_NUMBER"
-        //bat "docker rmi $registry/id:latest"
       }
     }
     stage('Deploy Image') {
