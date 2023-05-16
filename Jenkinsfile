@@ -24,8 +24,8 @@ pipeline {
       steps {
         script {
           kubeconfig(credentialsId: 'kubeid') {
-            bat 'powershell.exe -File "ImageTag.ps1"'
-            bat "kubectl apply -k ./sitecore"
+            bat 'powershell.exe -File "ImageTag.ps1" | kubectl apply -k ./sitecore'
+            //bat "kubectl apply -k ./sitecore"
           }
         }
       }
