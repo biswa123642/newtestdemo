@@ -24,8 +24,8 @@ pipeline {
       steps {
         script {
           kubeconfig(credentialsId: 'kubeid') {
-            bat 'powershell.exe -File "ImageTag.ps1" | kubectl apply -k ./sitecore'
-            //bat "kubectl apply -k ./sitecore"
+            bat 'powershell.exe Get-ChildItem "kustomization.yaml" -Recurse | ForEach { $_ -replace "{{BUILD_NUMBER}}", "$BUILD_NUMBER" }'
+            bat "kubectl apply -k ./sitecore"
           }
         }
       }
