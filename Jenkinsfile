@@ -10,8 +10,10 @@ pipeline {
     stage('Build And Push image') {
       steps{
         script {
-          def dockerImage = docker.build("${registry}/id:$BUILD_NUMBER", "./docker")
-          dockerImage.push()
+          docker.withRegistry('', 'dockerhub') {
+            def dockerImage = docker.build("${registry}/id:$BUILD_NUMBER", "./docker")
+            dockerImage.push()
+          }  
         }
       }
     }
