@@ -3,6 +3,6 @@ kind: Kustomization
 images:
 - name: nginx-image
   newName: biswa143/id
-  newTag: TAG
+  newTag: "TAG"
 resources:
 - deploy.yaml
