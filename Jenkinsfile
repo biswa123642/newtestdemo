@@ -2,6 +2,8 @@ pipeline {
   agent any
   
   environment {
+    DATE = new Date().format('yy.M')
+    TAG = "${DATE}.${BUILD_NUMBER}"
     registry = credentials('DOCKER_ID')
     registryCredential = 'dockerhub'
   }
@@ -11,7 +13,7 @@ pipeline {
       steps{
         script {
           docker.withRegistry( '', registryCredential ) {
-            def dockerImage = docker.build("${registry}/id:$BUILD_NUMBER", "./docker")
+            def dockerImage = docker.build("${registry}/id:$TAG", "./docker")
             dockerImage.push()
           }  
         }
@@ -19,7 +21,7 @@ pipeline {
     }
     stage('Clean Image') {
       steps {
-        bat "docker rmi $registry/id:$BUILD_NUMBER"
+        bat "docker rmi $registry/id:$TAG"
       }
     }
     stage('Deploy Image') {
