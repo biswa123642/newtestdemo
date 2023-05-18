@@ -10,7 +10,7 @@ pipeline {
     stage('Build And Push image') {
       steps{
         script {
-          bat "type ${registrypass} | docker login -u ${registryuser} --password-stdin"
+          bat "type $registrypass | docker login -u $registryuser --password-stdin"
           def dockerImage = docker.build("${registryuser}/id:$BUILD_NUMBER", "./docker")
           dockerImage.push()
         }
