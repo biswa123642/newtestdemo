@@ -26,10 +26,7 @@ pipeline {
       steps {
         script {
           kubeconfig(credentialsId: 'kubeid') {
-            powershell '''
-              "Get-ChildItem "kustomization.yaml" -Recurse | ForEach (Get-Content $_ | ForEach  { $_ -replace "{{BUILD_NUMBER}}", '$BUILD_NUMBER' }) }"
-               kubectl apply -k ./sitecore
-            '''
+            bat "kubectl apply -k ./sitecore"
           }
         }
       }
