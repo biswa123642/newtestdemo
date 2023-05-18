@@ -28,8 +28,9 @@ pipeline {
       steps {
         script {
           kubeconfig(credentialsId: 'kubeid') {
+            bat "cd sitecore"
             bat "kustomize edit set image nginx-image=*:$TAG"
-            bat "kubectl apply -k ./sitecore"
+            bat "kubectl apply -k ."
           }
         }
       }
