@@ -2,23 +2,24 @@ pipeline {
   agent any
   
   environment {
-    registryuser = credentials('DOCKER_ID')
-    registrypass = credentials('DOCKER_PASS')
+    registry = credentials('DOCKER_ID')
+    registryCredential = 'dockerhub'
   }
   
   stages {
     stage('Build And Push image') {
       steps{
         script {
-          bat "type $registrypass | docker login -u $registryuser --password-stdin"
-          def dockerImage = docker.build("${registryuser}/id:$BUILD_NUMBER", "./docker")
-          dockerImage.push()
+          docker.withRegistry( '', registryCredential ) {
+            def dockerImage = docker.build("${registry}/id:$BUILD_NUMBER", "./docker")
+            dockerImage.push()
+          }  
         }
       }
     }
     stage('Clean Image') {
       steps {
-        bat "docker rmi $registryuser/id:$BUILD_NUMBER"
+        bat "docker rmi $registry/id:$BUILD_NUMBER"
       }
     }
     stage('Deploy Image') {
