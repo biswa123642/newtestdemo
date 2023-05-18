@@ -2,7 +2,7 @@ pipeline {
   agent any
   
   environment {
-    DATE = new Date().format('yy.M')
+    DATE = new Date().format('yyyy.MM.dd')
     TAG = "${DATE}.${BUILD_NUMBER}"
     registry = credentials('DOCKER_ID')
     registryCredential = 'dockerhub'
