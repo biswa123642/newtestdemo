@@ -28,4 +28,4 @@ jobs:
       with:
         context: "{{defaultContext}}:docker"
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/gittest:$(date +%s)
+        tags: ${{ secrets.DOCKER_USERNAME }}/gittest:${{github.run_number}}
