@@ -22,10 +22,10 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-
+      
     - name: Build And Push
       uses: docker/build-push-action@v5.0.0
       with:
         context: "{{defaultContext}}:docker"
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/gittest/$(date +%s)
+        tags: ${{ secrets.DOCKER_USERNAME }}/gittest:$(date +%s)
