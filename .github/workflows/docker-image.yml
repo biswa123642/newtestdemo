@@ -43,3 +43,9 @@ jobs:
           method: service-account
           k8s-url: ${{ secrets.KUBERNETES_SA }}
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+
+      - name: Update Deployment Image Tag
+        working-directory: "sitecore"
+        run: |
+          kustomize edit set image nginx-image=*:${{github.run_number}}
+          kubectl apply -k .
