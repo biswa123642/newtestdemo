@@ -30,7 +30,7 @@ pipeline {
           dir('sitecore') {
             kubeconfig(credentialsId: 'kubeid') {
               bat "kustomize edit set image nginx-image=*:$TAG"
-              bat "kubectl apply -k ."
+              bat "kustomize build . | kubectl apply -f -"
             }
           }
         }
