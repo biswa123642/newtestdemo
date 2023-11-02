@@ -52,4 +52,4 @@ jobs:
       working-directory: "sitecore"
       run: |
         kustomize edit set image nginx-image=*:${{github.run_number}}
-        kubectl apply -k .
+        kustomize build . | kubectl apply -f -
