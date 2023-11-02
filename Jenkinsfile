@@ -28,7 +28,7 @@ pipeline {
       steps {
         script {
           dir('sitecore') {
-            kubeconfig(caCertificate: 'cacert', credentialsId: 'kubeid', serverUrl: 'url') {
+            kubeconfig(credentialsId: 'kubeid') {
               bat "kustomize edit set image nginx-image=*:$TAG"
               bat "kustomize build . | kubectl apply -f -"
             }
