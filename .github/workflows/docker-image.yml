@@ -2,7 +2,9 @@ name: Docker Kubernetes CI/CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+    - main
+  workflow_dispatch:
 
 jobs:
 
@@ -12,7 +14,7 @@ jobs:
 
     steps:
     - name: Check out the repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     - name: Docker Setup Buildx
       uses: docker/setup-buildx-action@v3.0.0
@@ -32,21 +34,24 @@ jobs:
 
   deploy:
 
-    if: success() && github.ref == 'refs/heads/main'
     needs: [ build ]
     
     runs-on: ubuntu-latest
     
     steps:
     - name: Check out the repo
-      uses: actions/checkout@v3
-        
-    - name: Set Kubernetes Context
-      uses: azure/k8s-set-context@v3
+      uses: actions/checkout@v4
+
+    - uses: azure/login@v2
       with:
-        method: service-account
-        k8s-url: ${{ secrets.KUBERNETES_SA }}
-        k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        
+    - uses: azure/aks-set-context@v5
+      with:
+        resource-group: ${{ secrets.RESOURCE_GROUP }}
+        cluster-name: ${{ secrets.CLUSTER_NAME }}
 
     - name: Create Deployment
       working-directory: "sitecore"
