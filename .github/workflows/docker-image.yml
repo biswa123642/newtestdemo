@@ -42,6 +42,7 @@ jobs:
         output: 'trivy-results.table'
         exit-code: '1'
         ignore-unfixed: true
+        scanners: 'vuln,secret'
         severity: 'CRITICAL,HIGH'
 
     - name: Publish Trivy results to summary
