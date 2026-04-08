@@ -74,5 +74,6 @@ jobs:
     - name: Create Deployment
       working-directory: "sitecore"
       run: |
+        kubectl get namespace sitecore || kubectl create namespace sitecore
         kustomize edit set image nginx-image=*:${{github.run_number}}
-        kustomize build . | kubectl apply -f -
+        kustomize build . | kubectl apply -n sitecore -f -
