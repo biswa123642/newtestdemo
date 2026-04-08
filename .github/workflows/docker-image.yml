@@ -61,6 +61,11 @@ jobs:
         resource-group: ${{ secrets.RESOURCE_GROUP }}
         cluster-name: ${{ secrets.CLUSTER_NAME }}
 
+    - name: Install Kustomize
+      run: |
+        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+        sudo install -o root -g root -m 0755 kustomize /usr/local/bin/kustomize
+
     - name: Create Deployment
       working-directory: "sitecore"
       run: |
