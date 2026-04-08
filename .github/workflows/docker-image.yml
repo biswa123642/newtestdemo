@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    runs-on: aks-agent-pool
+    runs-on: docker-agent-pool
 
     steps:
     - name: Check out the repo
@@ -36,7 +36,7 @@ jobs:
 
     needs: [ build ]
     
-    runs-on: aks-agent-pool
+    runs-on: docker-agent-pool
     
     steps:
     - name: Check out the repo
