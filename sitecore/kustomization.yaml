@@ -4,7 +4,7 @@ kind: Kustomization
 images:
 - name: nginx-image
   newName: biswa143/argotest
-  newTag: "5"
+  newTag: "6"
 
 resources:
 - rollout.yaml
