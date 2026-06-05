@@ -3,8 +3,8 @@ kind: Kustomization
 
 images:
 - name: nginx-image
-  newName: nginx-image
-  newTag: "TAG"
+  newName: biswa143/argotest
+  newTag: "4"
 
 resources:
 - rollout.yaml
@@ -14,8 +14,8 @@ resources:
 generatorOptions:
   disableNameSuffixHash: true
 secretGenerator:
-- name: nginx-tls
-  files:
-    - global/tls.key
-    - global/tls.crt
+- files:
+  - global/tls.key
+  - global/tls.crt
+  name: nginx-tls
   type: kubernetes.io/tls
