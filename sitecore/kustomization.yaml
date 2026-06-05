@@ -1,8 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 images:
 - name: nginx-image
   newName: nginx-image
   newTag: "TAG"
+
 resources:
-- deploy.yaml
+- rollout.yaml
+- service.yaml
+- ingress.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+secretGenerator:
+- name: nginx-tls
+  files:
+    - global/tls.key
+    - global/tls.crt
+  type: kubernetes.io/tls
