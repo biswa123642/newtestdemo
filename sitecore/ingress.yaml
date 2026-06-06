@@ -7,17 +7,28 @@ metadata:
 spec:
   ingressClassName: azure-application-gateway
   rules:
-    - host: nginx.altudo.net
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: nginx-active
-                port:
-                  number: 80
+  - host: nginx.altudo.net
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: nginx-active
+              port:
+                number: 80
+  - host: preview.altudo.net
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: nginx-preview
+              port:
+                number: 80
   tls:
-    - hosts:
-        - nginx.altudo.net
-      secretName: nginx-tls
+  - hosts:
+    - nginx.altudo.net
+    - preview.altudo.net
+    secretName: nginx-tls
